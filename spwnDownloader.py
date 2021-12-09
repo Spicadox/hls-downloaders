@@ -48,7 +48,7 @@ cookie = input("Cookie(CloudFront-Key-Pair-Id;CloudFront-Policy;CloudFront-Signa
 ffmpeg_args = ['powershell.exe', '-NoExit', 'ffmpeg']
 ffmpeg_args += ["-headers", f'"Cookie: {cookie}"']
 # ffmpeg_args += ['-user_agent', '"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36"']
-ffmpeg_args += ['-i', url, '-metadata', f'date={date}', '-metadata', f"artist='{artist}'", '-metadata', f'comment="{description}"', '-codec', 'copy', f"'{fileName}'"]
+ffmpeg_args += ['-i', url, '-metadata', f'date={date}', '-metadata', f"artist='{artist}'", '-metadata', f'description="{description}"', '-codec', 'copy', f"'{fileName}'"]
 try:
     process = subprocess.run(ffmpeg_args)
     print("Return Code:", process.returncode, process.args)
