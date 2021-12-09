@@ -1,1 +1,3 @@
-.idea/
+*
+!monthlyNico.py
+!spwnDownloader.py
