@@ -1,6 +1,7 @@
 import subprocess
 
 url = input("URL: ")
+url = url.split("&", 1)[0]
 title = input("Filename: ")
 date = input("Date: ")
 vid_id = input("Video Id: ")
