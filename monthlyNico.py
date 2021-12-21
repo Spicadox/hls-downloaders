@@ -1,7 +1,7 @@
 import subprocess
 
-url = input("URL: ")
-url = url.split("&", 1)[0]
+url = input("URL: ").replace("&", "`&")
+# url = url.split("&", 1)[0]
 title = input("Filename: ")
 date = input("Date: ")
 vid_id = input("Video Id: ")
@@ -36,8 +36,8 @@ ffmpeg_args = ['powershell.exe', '-NoExit', 'ffmpeg', '-i', url]
 ffmpeg_args += ['-user_agent', '"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36"']
 ffmpeg_args += ['-metadata', 'date=2021', '-metadata', f'comment="{description}"', '-codec', 'copy', fileName]
 try:
-    process = subprocess.run(ffmpeg_args, shell=True)
-    print("Return Code:", process.returncode)
+    process = subprocess.run(ffmpeg_args, shell=False)
+    print("Return Code:", process.returncode, process)
 except Exception as e:
     print(e)
 
