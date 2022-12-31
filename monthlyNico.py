@@ -32,9 +32,11 @@ for line in content:
 description = description.replace('&', '"`&"')
 print(description)
 
+# -http_persistent helps prevent 403 forbidden error of the keepalive request but in turn the video will play in background
+# '-http_persistent', '0'
 ffmpeg_args = ['powershell.exe', '-NoExit', 'ffmpeg', '-i', url]
 ffmpeg_args += ['-user_agent', '"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36"']
-ffmpeg_args += ['-metadata', 'date=2021', '-metadata', f'comment="{description}"', '-codec', 'copy', fileName]
+ffmpeg_args += ['-metadata', f'date={date[0:4]}', '-metadata', f'comment="{description}"', '-codec', 'copy', fileName]
 try:
     process = subprocess.run(ffmpeg_args, shell=False)
     print("Return Code:", process.returncode, process)
