@@ -63,19 +63,20 @@ description = description.replace('&', '"`&"')
 print(description)
 # e.g. CloudFront-Key-Pair-Id=K33HSRY3XILYEV;CloudFront-Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly92b2QyLnNwd24uanAvc3B3bi12b2QyLzIxMTAyMTAxLWpwc3Vpc2VpL2dycDEvY2FtMV92Mi8qIiwiQ29uZGl0aW9uIjp7IklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifSwiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2Mzc1MDY3OTkwMDB9fX1dfQ_=;CloudFront-Signature=BXH4mcyB52hd-oPbeDfrJQnqEoqqwadJFYwsiuCWBmlmh2~CRN84jnBpw4f4k56wIOdIc5abH5YX8rJ70JIFeQPcosDL6gnEZ3oWtnydm2irMgN2S0OFjQlwZg1vReP2oRd4mK/+IqdcnX/QQ78hPrp98tdl5sgNtXoctmzgt+UqadgtTVgy48cL0rfAechqSUhsi2xxRbt03t36qyLabnLs/Vk1QyUgY92RiXiz7RWzp09hcclypPGVAmkXu7xJOanSl4IFU5DHYa4q3fqd2IaOInL7hl2xXPfGxVcKMFWfrTVhhlO/FCgvmZVHIUr7KtdonMzqJXGZu81IKwC+mg_=;
 cookie = input("Cookies(key-value pair): ")
-num_header = input("Number of headers: ")
+num_header = int(input("Number of headers: "))
+header = []
 if num_header != 0:
-    header = []
-    for num in num_header:
+    for num in range(num_header):
         header.append(rf'-headers "{input("Header(key:value pair): ")}"')
 
 ffmpeg_args = ['powershell.exe', '-NoExit', 'ffmpeg']
-if cookie is not None or cookie != "":
+if cookie != "":
     ffmpeg_args += ["-headers", f'"Cookie: {cookie}"']
 if len(header) != 0:
     ffmpeg_args += header
-# ffmpeg_args += ['-user_agent', '"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36"']
-ffmpeg_args += ['-i', url, '-metadata', f'date={date}', '-metadata', f'artist="{artist}"', '-metadata',
+# ffmpeg_args += ['-user_agent', '"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"']
+ffmpeg_args += ['-protocol_whitelist', 'file,crypto,https,tcp,tls', '-allowed_extensions', 'ALL', '-i', url,
+                '-metadata', f'date={date}', '-metadata', f'artist="{artist}"', '-metadata',
                 f'description="{description}"', '-metadata', f'synopsis="{description}"', '-codec', 'copy', f"'{fileName}'"]
 try:
     process = subprocess.run(ffmpeg_args)
