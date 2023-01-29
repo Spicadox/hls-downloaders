@@ -26,7 +26,7 @@ date = input("Date: ")
 # Replace \ with unicode character U+29F5 ⧵ which is a Reverse Solidus Operator
 # Replace * with unicode character U+204E ⁎ which is a Low Asterisk
 # Replace | with unicode character U+23D0 ⏐ which is a Vertical Line Extension
-title = title.replace('"', '“').replace("<", "＜").replace(">", "＞").replace(":", "꞉").replace("/", "⧸").replace("?", "？").replace("\\", "⧵").replace("*", "⁎").replace("|", "⏐")
+title = title.replace('"', '`“').replace("<", "＜").replace(">", "＞").replace(":", "꞉").replace("/", "⧸").replace("?", "？").replace("\\", "⧵").replace("*", "⁎").replace("|", "⏐")
 
 fileName = title + ".mkv"
 
@@ -78,6 +78,7 @@ if num_header != 0:
 ffmpeg_args += ['-i', url, '-metadata', f'date={date}', '-metadata', f'artist="{artist}"', '-metadata',
                 f'synopsis="{description}"', '-codec', 'copy', f'"{fileName}"']
 try:
+    print(f"Command: {ffmpeg_args}")
     process = subprocess.run(ffmpeg_args)
     print("Return Code:", process.returncode, process.args)
 except Exception as e:
