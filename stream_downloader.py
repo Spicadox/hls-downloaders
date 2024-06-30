@@ -51,6 +51,9 @@ for line in content:
     line = line.replace('"', '`“').replace("'", "`'")
     if line != '':
         description = description + line
+    elif line == "　":
+        # if line is just full-width space, replace with regular space
+        description = description + " "
     else:
         # Appends `n`n at the end of a newline so powershell can parse as two newline
         description = description + "`n`n"
@@ -66,8 +69,10 @@ cookie = input("Cookies(key-value pair): ")
 num_header = int(input("Number of headers: "))
 if num_header != 0:
     header = []
-    for num in num_header:
+    num = 0
+    while num < num_header:
         header.append(rf'-headers "{input("Header(key:value pair): ")}"')
+        num+=1
 
 ffmpeg_args = ['powershell.exe', '-NoExit', 'ffmpeg']
 if cookie is not None or cookie != "" or cookie != " ":
@@ -75,7 +80,7 @@ if cookie is not None or cookie != "" or cookie != " ":
 if num_header != 0:
     ffmpeg_args += header
 # ffmpeg_args += ['-user_agent', '"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36"']
-ffmpeg_args += ['-i', url, '-metadata', f'date={date}', '-metadata', f'artist="{artist}"', '-metadata',
+ffmpeg_args += ['-i', url, '-metadata', f'title="{title}"', '-metadata', f'date={date}', '-metadata', f'artist="{artist}"', '-metadata',
                 f'synopsis="{description}"', '-codec', 'copy', f'"{fileName}"']
 try:
     print(f"Command: {ffmpeg_args}")
